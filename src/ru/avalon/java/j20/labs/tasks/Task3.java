@@ -2,9 +2,10 @@ package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Задание №3
@@ -23,22 +24,6 @@ public class Task3 implements Task {
         File output = new File("countries_buffered_mode_output.txt");
         Collection<String> lines = read(input);
         write(output, lines);
-
-        /*
-         * TODO(Студент): Выполнить задание №3
-         *
-         * 1. Реализовать метод read.
-         *
-         *    При чтении файла следует пользоваться типами данных:
-         *    FileReader и BufferedReader.
-         *
-         * 2. Реализовать метод write.
-         *
-         *    При реализации метода следует пользоваться типами данных:
-         *    PrintWriter.
-         *
-         * 3. С использованием отладчика проверить корректность работы программы.
-         */
     }
 
     /**
@@ -52,7 +37,15 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private Collection<String> read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+        try (Reader reader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(reader)){
+            Collection lines = new ArrayList();
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                lines.add(line);
+            }
+            return lines;
+        }
     }
 
     /**
@@ -66,6 +59,10 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, Collection<String> collection) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try(PrintWriter writer = new PrintWriter(file)){
+            for (String line : collection){
+                writer.println(line);
+            }
+        }
     }
 }
