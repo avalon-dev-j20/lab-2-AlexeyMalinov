@@ -44,8 +44,9 @@ public class Task6 implements Task {
     private Collection<Country> read(File file) throws IOException, ParseException {
         Collection<Country> collection = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
-            while(bufferedReader.readLine() != null){
-                collection.add(Country.valueOf(bufferedReader.readLine().trim()));
+            String line;
+            while((line = bufferedReader.readLine()) != null){
+                collection.add(Country.valueOf(line.trim()));
             }
         }
         return collection;
