@@ -3,9 +3,14 @@ package ru.avalon.java.j20.labs.tasks;
 import ru.avalon.java.j20.labs.Task;
 import ru.avalon.java.j20.labs.models.Country;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Задание №6
@@ -19,20 +24,9 @@ public class Task6 implements Task {
      * {@inheritDoc}
      */
     @Override
-    public void run() throws IOException {
+    public void run() throws IOException, ParseException{
         File input = new File("assets/countries.txt");
         Collection<Country> countries = read(input);
-
-        /*
-         * TODO(Студент): Выполнить задание №6
-         *
-         * 1. Реализовать метод read.
-         *
-         * 2. При реализации следует пользоваться классами:
-         *    BufferedReader и Country.
-         *
-         * 3. С использованием отладчика проверить корректность работы программы.
-         */
     }
 
     /**
@@ -47,7 +41,13 @@ public class Task6 implements Task {
      * @return коллекция объектов типа {@link Country}
      * @throws IOException в случае ошибки ввода-вывода.
      */
-    private Collection<Country> read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+    private Collection<Country> read(File file) throws IOException, ParseException {
+        Collection<Country> collection = new ArrayList<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+            while(bufferedReader.readLine() != null){
+                collection.add(Country.valueOf(bufferedReader.readLine().trim()));
+            }
+        }
+        return collection;
     }
 }
